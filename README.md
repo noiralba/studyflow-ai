@@ -60,18 +60,17 @@ http://localhost:5173
 
 ### Tasks
 
-````bash
+```bash
 GET /api/tasks
 POST /api/tasks
 PUT /api/tasks/:id
 DELETE /api/tasks/:id
 
-```bash
 AI
 POST /api/ai
-
+``` 
 
 💡 Purpose
 
 This project is built as part of learning fullstack development and exploring how AI can be integrated into real-world applications in a controlled and secure way.
-````
+
