@@ -1,138 +1,193 @@
-# StudyFlow AI 🚀
+## 🚀 StudyFlow AI 
 
-A fullstack project built with React, Express and SQLite, extended with basic AI functionality.
+A fullstack application built with React, Express, and SQLite, extended with a basic AI endpoint and input validation.
 
-## 📌 About the project
+---
 
-StudyFlow is a task management application where users can create, update and manage study tasks.
+## 📌 About the Project
 
-The project has been extended with an AI route and is intended to evolve into an AI-assisted system with guardrails, RAG concepts and secure handling of user input.
+StudyFlow is a task management application where users can create, update, and manage study tasks.
 
-## 🧰 Tech stack
+The project includes a simple AI endpoint (/api/ai) and focuses on building a structured backend with proper validation and separation of concerns.
 
-- Frontend: React (Vite)
-- Backend: Node.js + Express
-- Database: SQLite
-- API communication: Fetch
-- Version control: Git & GitHub
+---
+
+## 🧰 Tech Stack
+
+Frontend: React (Vite)  
+Backend: Node.js + Express  
+Database: SQLite  
+API Communication: Fetch  
+Version Control: Git & GitHub  
+
+---
 
 ## ⚙️ Features
 
-- Create, update and delete tasks
+- Create, update, and delete tasks
 - Fullstack communication (frontend ↔ backend)
 - SQLite database integration
-- AI route (`/api/ai`) for future AI features
+- AI endpoint with input validation
 
-## 🤖 AI & future development
+---
 
-Planned improvements:
+## 📁 Backend Structure
 
-- AI-generated task suggestions
-- Guardrails for safe AI usage (input/output filtering)
-- Exploration of RAG (Retrieval Augmented Generation)
-- Possible migration to MongoDB + Mongoose
+### The backend is structured as follows:
 
-## 🚀 Getting started
+`server.js` – main server and route handling  
 
-### Install dependencies
+`utils/validatePrompt.js` – validation logic for AI input  
 
+Validation logic is separated from route handling to improve readability and maintainability.
+
+---
+
+## 🔐 Environment Variables
+
+The backend uses environment variables for configuration.
+
+Create a .env file inside the backend folder:
+
+`PORT=5001`
+
+The server will use this port when starting.
+
+---
+
+## 🚀 Getting Started
+#### Install Dependencies
 ```bash
 npm install
 cd backend && npm install
 cd ../frontend && npm install
 ```
+---
 
-## Run the project
-
-```bash
+## ▶️ Run the Project
 npm run dev
-```
 
 ### Backend runs on:
-
 http://localhost:5001
 
-### Fronend runs on:
-
+### Frontend runs on:
 http://localhost:5173
+
+---
 
 ## 📡 API
 
-Base URL:
+### Base URL
 http://localhost:5001
 
-## Tasks
+---
+
+## 📚 Task Endpoints
 
 ### GET /api/tasks
-Hämtar alla tasks
+Fetch all tasks
 
 ### Response:
-```bash 
-[
-  {
-    "id": 1,
-    "title": "Learn React",
-    "course": "Frontend",
-    "status": "ongoing"
-  }
-]
+
+```res
+[  
+ {  
+  "id": 1,  
+  "title": "Learn React",  
+  "course": "Frontend",  
+  "status": "ongoing"  
+ }  
+]  
 ```
+---
+
 ### POST /api/tasks
-Skapar en ny task
+Create a new task
 
 ### Request:
-```bash
-{
-  "title": "Learn API",
-  "course": "Backend",
-  "status": "planned"
-}
+
+```req
+{  
+ "title": "Learn API",  
+ "course": "Backend",  
+ "status": "planned"  
+}  
 ```
+
+---
+
 ### Response:
-```
-{
-  "id": 2,
-  "title": "Learn API",
-  "course": "Backend",
-  "status": "planned"
-}
-```
-### PUT /api/tasks/:id
-Uppdaterar en task
 
-### DELETE /api/tasks/:id
-Tar bort en task
+```res
+{  
+ "id": 2,  
+ "title": "Learn API",  
+ "course": "Backend",  
+ "status": "planned"  
+}  
+```
 
-### 🤖 AI
+---
+
+### PUT /api/tasks/
+Update existing task
+
+---
+
+### DELETE /api/tasks/
+Delete a task
+
+---
+
+### 🤖 AI Endpoint
+
 ### POST /api/ai
-Test-route för AI-funktionalitet
+Basic AI route with input validation
 
 ### Request:
+
+```req
+{ "prompt": "give me a study task" }
 ```
-{
-  "prompt": "ge mig en studieuppgift"
-}
-```
+
+---
 
 ### Response:
-```
-{
-  "message": "AI route is working",
-  "promptReceived": "ge mig en studieuppgift"
+
+```res
+{  
+"message": "AI route is working",  
+"promptReceived": "give me a study task"  
 }
 ```
 
-## Available Endpoints
-```bash
-GET /api/tasks
-POST /api/tasks
-PUT /api/tasks/:id
-DELETE /api/tasks/:id
+---
 
-AI
-POST /api/ai
+## 🔍 Validation Rules
+
+### The AI endpoint validates input before processing:
+
+```text
+prompt must be a string  
+empty input is rejected  
+input is trimmed before use  
+input length is limited  
+certain keywords are blocked  
 ```
+
+---
+
+## 📡 Available Endpoints
+
+GET /api/tasks     
+POST /api/tasks    
+PUT /api/tasks/:id     
+DELETE /api/tasks/:id     
+
+POST /api/ai  
+
+---
 
 ## 💡 Purpose
 
-This project is built as part of learning fullstack development and exploring how AI can be integrated into real-world applications in a controlled and secure way.
+This project is built to learn fullstack development and to explore how to structure backend logic, validate user input, and prepare for future AI integration in a controlled and maintainable way.
