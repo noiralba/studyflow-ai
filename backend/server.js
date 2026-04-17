@@ -1,9 +1,12 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const sqlite3 = require("sqlite3").verbose();
+const validatePrompt = require("./utils/validatePrompt");
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 const db = new sqlite3.Database("./database/studyflow.db", (err) => {
   if (err) {
@@ -45,47 +48,17 @@ app.get("/api/tasks", (req, res) => {
 app.post("/api/ai", (req, res) => {
   const { prompt } = req.body;
 
-  // ✅ Guardrail 1: kontrollera att prompt finns och är en string
-  if (!prompt || typeof prompt !== "string") {
+  const result = validatePrompt(prompt);
+
+  if (result.error) {
     return res.status(400).json({
-      error: "Prompt is required and must be a string",
-    });
-  }
-
-  // ✅ Guardrail 2: trimma och kontrollera att den inte är tom
-  const cleanPrompt = prompt.trim();
-
-  if (cleanPrompt.length === 0) {
-    return res.status(400).json({
-      error: "Prompt cannot be empty",
-    });
-  }
-
-  // ✅ Guardrail 3: stoppa för långa prompts
-  if (cleanPrompt.length > 200) {
-    return res.status(400).json({
-      error: "Prompt is too long. Max 200 characters allowed.",
-    });
-  }
-
-  // ✅ Guardrail 4: blockera vissa ord
-  const blockedWords = ["hack", "password", "bypass"];
-
-  const lowerPrompt = cleanPrompt.toLowerCase();
-
-  const containsBlockedWord = blockedWords.some((word) =>
-    lowerPrompt.includes(word),
-  );
-
-  if (containsBlockedWord) {
-    return res.status(400).json({
-      error: "Prompt contains restricted content",
+      error: result.error,
     });
   }
 
   res.json({
     message: "AI route is working",
-    promptReceived: cleanPrompt,
+    promptReceived: result.cleanPrompt,
   });
 });
 
