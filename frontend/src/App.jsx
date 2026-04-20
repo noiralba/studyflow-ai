@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import TaskList from "./components/TaskList";
+import TaskList from "./components/taskList";
 import TaskForm from "./components/TaskForm";
 
 function App() {
