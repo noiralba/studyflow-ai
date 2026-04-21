@@ -183,34 +183,6 @@ app.put("/api/tasks/:id", (req, res) => {
 });
 
 // /:ID
-app.put("/api/tasks/:id", (req, res) => {
-  const { id } = req.params;
-  const { title, course, status } = req.body;
-
-  const sql = `
-    UPDATE tasks
-    SET title = ?, course = ?, status = ?
-    WHERE id = ?
-  `;
-
-  db.run(sql, [title, course, status, id], function (err) {
-    if (err) {
-      console.error("Failed to update task:", err.message);
-      return res.status(500).json({ error: "Failed to update task" });
-    }
-
-    if (this.changes === 0) {
-      return res.status(404).json({ error: "Task not found" });
-    }
-
-    res.json({
-      id: Number(id),
-      title,
-      course,
-      status,
-    });
-  });
-});
 
 app.get("/api/tasks/:id", (req, res) => {
   const taskId = req.params.id;
